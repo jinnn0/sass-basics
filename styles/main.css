@@ -1,0 +1,140 @@
+/* Learn Sass */
+/*
+ <div class="main">
+     <p class="main__p">
+       Lorem Ipsum is simply dummy text of the printing
+     </p>
+
+     <p class="main__p">
+       ing Lorem Ipsum is that it has a more-o
+     </p>
+ </div>
+*/
+/*
+ 01. Browser can't read sass file
+ In HTML, add the auto-generated, compiled css
+
+ <link rel="stylesheet" href="./styles/main.css" />
+*/
+/*
+ 02. Separating files
+ Partial scss files that can be included in other sass files
+ It's important to modularize CSS especially when working with large project to make it easier to maintain
+
+ Partial is a scss file named with a leading undersocre (_) ie. _header.scss
+ It lets Sass know that it's a partial and that it shouldn't generate a CSS file
+ So the compiler would ignore those files that begin with "_"
+ When importing, you don't have to add the ("_") or the ".scss" extension
+
+*/
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/*
+ 03. Variable
+ SCSS variables are not compiled into CSS variables
+ But compiled to the actual values
+*/
+body {
+  background-color: white;
+  color: black;
+  font-weight: 700;
+}
+
+/*
+ 04. Nesting
+*/
+.main {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.main p {
+  background-color: orange;
+  margin: 10px;
+}
+
+.main .main__p, .main .message {
+  background-color: #a0c9ff;
+}
+
+.main__p, .main .message {
+  background-color: #feffcc;
+}
+
+.main__p:hover, .main .message:hover {
+  background-color: #a9ff9e;
+}
+
+.main:hover {
+  background-color: pink;
+}
+
+/*
+ 05. Functions
+*/
+.main__p, .main .message {
+  font-weight: 400;
+}
+
+/*
+ 06. Mixins
+ Similar to Sass functions
+ Don't write the same tedious styles if it's used in many different files
+ Mixins Let you make groups of CSS declarations that you want to reuse throughout your site
+*/
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -ms-flex-direction: row;
+      flex-direction: row;
+}
+
+@media (max-width: 800px) {
+  .main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+/*
+ 07. Extend
+*/
+.main__p, .main .message {
+  color: #686868;
+}
+
+/*
+ 07. Operation
+ - Math operation
+ - Opertaion has to be of the same type
+ - Ex. You can't do 100% - 120px like you would in CSS using calc(100% - 20px);
+*/
+.message {
+  height: 80px;
+}

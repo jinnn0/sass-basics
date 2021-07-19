@@ -1,0 +1,192 @@
+/* Learn Sass */
+/*
+ <div class="main">
+     <p class="main__p">
+       Lorem Ipsum is simply dummy text of the printing
+     </p>
+
+     <p class="main__p">
+       ing Lorem Ipsum is that it has a more-o
+     </p>
+ </div>
+*/
+
+/*
+ 01. Browser can't read sass file
+ In HTML, add the auto-generated, compiled css
+
+ <link rel="stylesheet" href="./styles/main.css" />
+*/
+
+/*
+ 02. Separating files
+ Partial scss files that can be included in other sass files
+ It's important to modularize CSS especially when working with large project to make it easier to maintain
+
+ Partial is a scss file named with a leading undersocre (_) ie. _header.scss
+ It lets Sass know that it's a partial and that it shouldn't generate a CSS file
+ So the compiler would ignore those files that begin with "_"
+ When importing, you don't have to add the ("_") or the ".scss" extension
+
+*/
+@import './base/global';
+@import './base/variables';
+
+/*
+ 03. Variable
+ SCSS variables are not compiled into CSS variables
+ But compiled to the actual values
+*/
+$primary-color: rgb(255, 213, 236);
+$secondary-color: orange;
+$text-color: black;
+$bg-color: white;
+$font-weights: (
+  'regular': 400,
+  'medium': 500,
+  'bold': 700
+);
+
+body {
+  background-color: $bg-color;
+  color: $text-color;
+  font-weight: map-get($font-weights, bold);
+}
+
+/*
+ 04. Nesting
+*/
+.main {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 10px;
+
+  // .main p
+  p {
+    background-color: $secondary-color;
+    margin: 10px;
+  }
+
+  // .main .main__p
+  #{&}__p {
+    background-color: rgb(160, 201, 255);
+  }
+
+  // .main__p
+  &__p {
+    background-color: rgb(254, 255, 204);
+
+    &:hover {
+      background-color: rgb(169, 255, 158);
+    }
+  }
+
+  // .main:hover
+  &:hover {
+    background-color: pink;
+  }
+}
+
+/*
+ 05. Functions
+*/
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+.main {
+  &__p {
+    font-weight: weight(regular);
+  }
+}
+
+/*
+ 06. Mixins
+ Similar to Sass functions
+ Don't write the same tedious styles if it's used in many different files
+ Mixins Let you make groups of CSS declarations that you want to reuse throughout your site
+*/
+@mixin flexInitial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+@mixin theme($dark-theme: true) {
+  @if $dark-theme {
+    background-color: darken($bg-color, 80%);
+    color: lighten($text-color, 90%);
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+
+@mixin tablet-portrait {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+.main {
+  @include flexInitial;
+  @include flexCenter(column);
+  @include flexCenter(row);
+}
+
+.main {
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.dark {
+  // @include theme($dark-theme: true);
+}
+
+/*
+ 07. Extend
+*/
+.main {
+  &__p {
+    color: rgb(104, 104, 104);
+  }
+
+  .message {
+    @extend .main__p;
+  }
+}
+
+/*
+ 07. Operation
+ - Math operation
+ - Opertaion has to be of the same type
+ - Ex. You can't do 100% - 120px like you would in CSS using calc(100% - 20px);
+*/
+
+.message {
+  height: 200px - 120px;
+}
